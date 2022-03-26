@@ -2,7 +2,7 @@
   "name": "easy-interpretation",
   "productName": "easy-interpretation",
   "version": "1.0.0",
-  "description": "Realtime audio interpretation software",
+  "description": "Live event interpretation using smartphones",
   "main": ".webpack/main",
   "scripts": {
     "start": "cross-env ELECTRON_ENV=development electron-forge start",
