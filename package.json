@@ -1,7 +1,7 @@
 {
   "name": "easy-interpretation",
   "productName": "easy-interpretation",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Live event interpretation using smartphones",
   "main": ".webpack/main",
   "scripts": {
@@ -14,7 +14,7 @@
     "unused-exports": "ts-unused-exports tsconfig.json",
     "linux": "electron-forge make --targets @electron-forge/maker-zip",
     "windows": "electron-forge make --targets @electron-forge/maker-squirrel",
-    "precommit": "yarn lint && yarn test && yarn linux"
+    "travis": "yarn lint && yarn unused-exports && yarn linux"
   },
   "keywords": [],
   "author": "hartib",
