@@ -49,11 +49,11 @@ export const initialState: State = {
       enable: true,
       http: {
         enable: true,
-        port: 80,
+        port: 8080,
       },
       https: {
         enable: false,
-        port: 443,
+        port: 8443,
         certPath: '',
         keyPath: '',
       },
