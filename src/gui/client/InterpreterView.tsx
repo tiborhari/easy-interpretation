@@ -4,6 +4,7 @@ import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import ReconnectingWebSocket from 'reconnecting-websocket';
 
 import { ServerState } from '../types';
+import KeepAwake from './KeepAwake';
 import ListenerView from './ListenerView';
 import { getWebSocketURL, websocketOptions } from './utils';
 
@@ -154,6 +155,7 @@ const InterpreterView = ({ serverState }: { serverState: ServerState }) => {
 
   return (
     <div className="d-grid gap-3">
+      <KeepAwake active={!!interpretLanguage} />
       <h1>Interpret</h1>
       {(serverState?.languages ?? []).map((language) => {
         const isActive = language.id === interpretLanguage;

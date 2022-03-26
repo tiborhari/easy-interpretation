@@ -6,6 +6,7 @@ import * as Icon from 'react-bootstrap-icons';
 import ReconnectingWebSocket from 'reconnecting-websocket';
 
 import { ServerState } from '../types';
+import KeepAwake from './KeepAwake';
 import { getWebSocketURL, websocketOptions } from './utils';
 
 
@@ -165,6 +166,7 @@ const ListenerView = ({ serverState, small }: { serverState: ServerState; small?
 
   return (
     <div className={small ? 'd-flex flex-row' : 'd-grid gap-3'}>
+      <KeepAwake active={!!interpretLanguage} />
       <audio ref={audioRef} onPlay={() => setInterpreterState('live')} />
       {(serverState?.languages ?? []).map((language) => {
         const isActive = language.id === interpretLanguage;
