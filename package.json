@@ -1,0 +1,182 @@
+{
+  "name": "easy-interpretation",
+  "productName": "easy-interpretation",
+  "version": "1.0.0",
+  "description": "Realtime audio interpretation software",
+  "main": ".webpack/main",
+  "scripts": {
+    "start": "cross-env ELECTRON_ENV=development electron-forge start",
+    "test": "jest",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "eslint --cache --color --ext .jsx,.js,.tsx,.ts src",
+    "unused-exports": "ts-unused-exports tsconfig.json",
+    "linux": "electron-forge make --targets @electron-forge/maker-zip",
+    "windows": "electron-forge make --targets @electron-forge/maker-squirrel",
+    "precommit": "yarn lint && yarn test && yarn linux"
+  },
+  "keywords": [],
+  "author": "hartib",
+  "license": "UNLICENSED",
+  "private": true,
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "electron_projection_poc_webpack"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin",
+            "linux"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ],
+      "plugins": [
+        [
+          "@electron-forge/plugin-webpack",
+          {
+            "mainConfig": "./webpack.main.config.js",
+            "renderer": {
+              "config": "./webpack.renderer.config.js",
+              "entryPoints": [
+                {
+                  "html": "./src/index.html",
+                  "js": "./src/mainWindow/index.ts",
+                  "name": "main_window",
+                  "preload": {
+                    "js": "./src/mainWindow/preload.ts"
+                  }
+                },
+                {
+                  "html": "./src/index.html",
+                  "js": "./src/gui/client",
+                  "name": "client"
+                }
+              ]
+            }
+          }
+        ]
+      ]
+    }
+  },
+  "jest": {
+    "collectCoverage": true,
+    "globals": {
+      "TEXT_LAYOUT_WINDOW_WEBPACK_ENTRY": ""
+    },
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|less|scss)$": "<rootDir>/__mocks__/styleMock.js"
+    }
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.9.0",
+    "@material-ui/icons": "^4.5.1",
+    "@types/express": "^4.17.13",
+    "animejs": "^3.1.0",
+    "array-move": "^4.0.0",
+    "bootstrap": "^5.1.3",
+    "bootstrap-icons": "^1.8.1",
+    "buffer": "^6.0.3",
+    "cookie-session": "^2.0.0",
+    "dialogs": "^2.0.1",
+    "electron-default-menu": "^1.0.2",
+    "electron-log": "^4.4.6",
+    "electron-squirrel-startup": "^1.0.0",
+    "electron-store": "^5.1.1",
+    "express": "^4.17.3",
+    "express-ws": "^5.0.2",
+    "generate-password": "^1.7.0",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.1",
+    "monocle-ts": "^2.3.9",
+    "newtype-ts": "^0.3.4",
+    "process": "^0.11.10",
+    "randombytes": "^2.1.0",
+    "react": "^17.0.2",
+    "react-activity": "^2.1.3",
+    "react-bootstrap": "^2.2.1",
+    "react-bootstrap-icons": "^1.7.2",
+    "react-dom": "^17.0.2",
+    "react-hot-loader": "^4.12.15",
+    "react-redux": "^7.2.6",
+    "reconnecting-websocket": "^4.4.0",
+    "redux": "^4.1.2",
+    "redux-logger": "^3.0.6",
+    "secure-compare": "^3.0.1",
+    "simple-peer": "^9.11.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.2",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.10.1",
+    "@babel/plugin-proposal-optional-chaining": "^7.10.1",
+    "@babel/preset-react": "^7.7.0",
+    "@babel/preset-typescript": "^7.9.0",
+    "@electron-forge/cli": "^6.0.0-beta.63",
+    "@electron-forge/maker-deb": "6.0.0-beta.63",
+    "@electron-forge/maker-rpm": "6.0.0-beta.63",
+    "@electron-forge/maker-squirrel": "6.0.0-beta.63",
+    "@electron-forge/maker-zip": "6.0.0-beta.63",
+    "@electron-forge/plugin-webpack": "6.0.0-beta.63",
+    "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
+    "@types/animejs": "^3.1.3",
+    "@types/cookie-session": "^2.0.44",
+    "@types/express-ws": "^3.0.1",
+    "@types/jest": "^25.2.1",
+    "@types/jsonwebtoken": "^8.5.8",
+    "@types/lodash": "^4.14.180",
+    "@types/randombytes": "^2.0.0",
+    "@types/react-dom": "^16.9.6",
+    "@types/react-redux": "^7.1.16",
+    "@types/react-virtualized-auto-sizer": "^1.0.1",
+    "@types/react-window": "^1.8.4",
+    "@types/redux-logger": "^3.0.7",
+    "@types/simple-peer": "^9.11.4",
+    "@types/unidecode": "^0.1.1",
+    "@types/uuid": "^7.0.2",
+    "@types/webpack-env": "^1.15.1",
+    "@types/xml2js": "^0.4.8",
+    "@typescript-eslint/eslint-plugin": "^5.16.0",
+    "@typescript-eslint/parser": "^5.16.0",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-plugin-transform-es2015-classes": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-throw-expressions": "^7.0.0-beta.3",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "cross-env": "^7.0.3",
+    "css-loader": "^6.0.0",
+    "csstype": "^2.6.10",
+    "electron": "^17.2.0",
+    "eslint": "^8.12.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-typescript": "^16.1.4",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "node-loader": "^2.0.0",
+    "node-sass": "^4.13.0",
+    "sass-loader": "^8.0.0",
+    "style-loader": "^3.0.0",
+    "ts-loader": "^9.2.2",
+    "ts-unused-exports": "^8.0.0",
+    "typescript": "^4.6.2"
+  }
+}

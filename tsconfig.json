@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "baseUrl": ".",
+    "esModuleInterop": true,
+    "jsx": "react",
+    "module": "commonjs",
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "outDir": "dist",
+    "sourceMap": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "typeRoots": ["./src/types", "node_modules/@types"],
+    "paths": {
+      "*": ["node_modules/*"]
+    }
+  },
+  "include": [
+    "src/**/*"
+  ]
+}
