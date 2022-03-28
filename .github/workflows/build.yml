@@ -19,16 +19,21 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js
+      - name: Use Node.js 14.x
         uses: actions/setup-node@v1
         with:
           node-version: '14.x'
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
-      - run: yarn lint
-      - run: yarn unused-exports
-      - run: yarn make-zip
-      - name: 'Upload Artifacts'
+        # --frozen-lockfile doesn't allow installing anything not in the lockfile
+        # --network-timeout is needed to download large dependendies
+        run: yarn install --frozen-lockfile --network-timeout 600000
+      - node: Run ESLint
+        run: yarn lint
+      - name: Check for unused imports
+        run: yarn unused-exports
+      - name: Build the package
+        run: yarn make-zip
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
           name: build-output
@@ -46,7 +51,7 @@ jobs:
         with:
           name: build-output
           path: packages
-      - name: 'Create Release'
+      - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
           draft: true
