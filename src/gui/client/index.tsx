@@ -5,6 +5,7 @@ import {
   Button, Col, Container, Row, Spinner,
 } from 'react-bootstrap';
 import ReactDOM from 'react-dom';
+import useInterval from 'use-interval';
 
 import { ServerState } from '../types';
 import InterpreterView from './InterpreterView';
@@ -20,11 +21,11 @@ const ClientGUI = () => {
   const [isLoggingIn, setLoggingIn] = React.useState(false);
   const [serverState, setServerState] = React.useState<ServerState | null>(null);
 
-  React.useEffect(() => {
+  useInterval(() => {
     fetch('/state').then(res => res.json()).then((newState) => {
       setServerState(newState);
     });
-  }, []);
+  }, 10000, true);
 
   if (serverState === null) {
     return <Spinner animation="border" />;
@@ -41,6 +42,15 @@ const ClientGUI = () => {
     });
     setServerState(await res.json());
   };
+
+  const handleInterpreterClose = (stoppedLanguageId: string) => setServerState({
+    ...serverState,
+    // Change the closed language status to non-live, so that its button will not be disabled.
+    languages: serverState.languages.map(language => (
+      language.id === stoppedLanguageId
+        ? { ...language, live: false }
+        : language)),
+  });
 
   return (
     <Container className="p-3">
@@ -61,7 +71,7 @@ const ClientGUI = () => {
             </Col>
           </Row>
           {serverState.isLoggedIn
-            ? <InterpreterView serverState={serverState} />
+            ? <InterpreterView serverState={serverState} onClose={handleInterpreterClose} />
             : <ListenerView serverState={serverState} />}
         </>
       )}

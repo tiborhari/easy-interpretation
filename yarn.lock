@@ -8981,6 +8981,11 @@ url-parse-lax@^3.0.0:
   dependencies:
     prepend-http "^2.0.0"
 
+use-interval@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/use-interval/-/use-interval-1.4.0.tgz#d0d24a359664373c0ed3f64768c99022a59cfce3"
+  integrity sha512-1betIJun2rXKLxa30AFOBZCeZhsBJoJ/3+gkCeYbJ63lAR//EnAb1NjNeFqzgqeM7zQfR76rrCUaA8DvfgoOpA==
+
 username@^5.1.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/username/-/username-5.1.0.tgz#a7f9325adce2d0166448cdd55d4985b1360f2508"

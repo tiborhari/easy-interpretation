@@ -121,7 +121,8 @@
     "redux": "^4.1.2",
     "redux-logger": "^3.0.6",
     "secure-compare": "^3.0.1",
-    "simple-peer": "^9.11.1"
+    "simple-peer": "^9.11.1",
+    "use-interval": "^1.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",

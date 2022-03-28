@@ -162,6 +162,13 @@ const ListenerView = ({ serverState, small }: { serverState: ServerState; small?
     };
   };
 
+  React.useEffect(() => {
+    if (!serverState.languages.some(language => language.id === interpretLanguage)) {
+      // Close, if the currently playing language is no longer available.
+      close();
+    }
+  }, [serverState.languages]);
+
   React.useEffect(() => close, []); // Close the connection when unmounting
 
   return (

@@ -45,7 +45,10 @@ const LanguageDisabledTooltip = ({
 ));
 
 
-const InterpreterView = ({ serverState }: { serverState: ServerState }) => {
+const InterpreterView = ({ onClose, serverState }: {
+  onClose: (stoppedLanguageId: string) => void;
+  serverState: ServerState;
+}) => {
   const mediaStreamRefRef = React.useRef<MediaStream>();
   const wsRef = React.useRef<ReconnectingWebSocket>();
   const peersRef = React.useRef<{ [key: string]: Instance }>();
@@ -62,6 +65,9 @@ const InterpreterView = ({ serverState }: { serverState: ServerState }) => {
       });
     }
     setInterpreterState('idle');
+    if (interpretLanguage) {
+      onClose(interpretLanguage);
+    }
     setInterpretlanguage(null);
   };
 
