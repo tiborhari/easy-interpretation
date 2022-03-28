@@ -6,10 +6,10 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+  tags:
 
 jobs:
   build:
-
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
@@ -27,9 +27,27 @@ jobs:
       - run: yarn lint
       - run: yarn unused-exports
       - run: yarn make-zip
-      - name: 'Upload Artifact'
+      - name: 'Upload Artifacts'
         uses: actions/upload-artifact@v3
         with:
-          name: my-artifact
+          name: build-output
           path: out/make/zip/**/*.zip
           retention-days: 5
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+
+    steps:
+      - needs: build
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build-output
+          path: packages
+      - name: 'Create Release'
+        uses: softprops/action-gh-release@v1
+        with:
+          draft: true
+          fail_on_unmatched_files: true
+          files: packages/**/.zip
