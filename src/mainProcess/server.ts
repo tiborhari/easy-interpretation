@@ -185,13 +185,11 @@ app.ws('/interpret/:languageId', (ws, req) => {
   }
 
   store.dispatch(addInterpreter({ languageId, socketId }));
-  if (language.interpreterSocketId === socketId) {
-    language.listeners.forEach((listenerId) => {
-      if (listenerId in webSockets) {
-        webSockets[listenerId].send(JSON.stringify({ type: 'newInterpreter', interpreterId: socketId }));
-      }
-    });
-  }
+  language.listeners.forEach((listenerId) => {
+    if (listenerId in webSockets) {
+      webSockets[listenerId].send(JSON.stringify({ type: 'newInterpreter', interpreterId: socketId }));
+    }
+  });
 
   ws.on('message', (msg) => {
     const message = JSON.parse(msg.toString());
@@ -226,6 +224,7 @@ store.subscribe(() => {
 });
 
 
+// Handle server events (close, error)
 (<const>['http', 'https']).forEach((protocol) => {
   const server = servers[protocol];
   server.on('close', () => {
@@ -244,6 +243,7 @@ store.subscribe(() => {
   });
 });
 
+// Manage server startup/shutdown based on the state.
 const manageServers = () => {
   const state = store.getState();
   const serversState = state.liveState.server;
