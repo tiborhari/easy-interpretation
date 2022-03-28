@@ -13,6 +13,7 @@ import {
   HttpState, LanguageLiveState, LanguageSettings, ServerState, State,
 } from '../../state/types';
 import ConditionalTooltip from '../ConditionalTooltip';
+import EnableButton from './EnableButton';
 
 
 const getColorForServerStatus = (status: HttpState['status']) => {
@@ -147,32 +148,15 @@ const StatusView = ({ onChangeSettings, state }: ConnectedProps<typeof connector
                       </Badge>
                     </ConditionalTooltip>
                   </div>
-                  <ButtonGroup>
-                    <Button
-                      size="sm"
-                      variant={serverSettings.enable ? 'success' : 'outline-success'}
-                      onClick={() => partialChangeSettings({
-                        server: {
-                          ...state.settings.server,
-                          [protocol]: { ...state.settings.server[protocol], enable: true },
-                        },
-                      })}
-                    >
-                      Enable
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant={serverSettings.enable ? 'outline-danger' : 'danger'}
-                      onClick={() => partialChangeSettings({
-                        server: {
-                          ...state.settings.server,
-                          [protocol]: { ...state.settings.server[protocol], enable: false },
-                        },
-                      })}
-                    >
-                      Disable
-                    </Button>
-                  </ButtonGroup>
+                  <EnableButton
+                    value={serverSettings.enable}
+                    onChange={enable => partialChangeSettings({
+                      server: {
+                        ...state.settings.server,
+                        [protocol]: { ...state.settings.server[protocol], enable },
+                      },
+                    })}
+                  />
                 </Card.Body>
               </Card>
             </Col>
@@ -195,12 +179,6 @@ const StatusView = ({ onChangeSettings, state }: ConnectedProps<typeof connector
                 <h5 className="m-0">
                   {language.name}
                 </h5>
-                <Form.Check
-                  checked={language.enable}
-                  label="Enable"
-                  type="switch"
-                  onChange={({ target }) => changeLanguage({ enable: target.checked })}
-                />
                 <ButtonGroup>
                   <Button
                     size="sm"
@@ -238,6 +216,11 @@ const StatusView = ({ onChangeSettings, state }: ConnectedProps<typeof connector
                   </Button>
                 </ButtonGroup>
               </div>
+              <EnableButton
+                className="me-3 mb-2"
+                value={language.enable}
+                onChange={enable => changeLanguage({ enable })}
+              />
               <ButtonGroup className="mb-2">
                 <Button
                   size="sm"
@@ -280,7 +263,7 @@ const StatusView = ({ onChangeSettings, state }: ConnectedProps<typeof connector
                 </>
               ) : (
                 <>
-                  <div className="mb-2">Disabled</div>
+                  <div className="mb-2">&nbsp;</div>
                   <div>&nbsp;</div>
                 </>
               )}
