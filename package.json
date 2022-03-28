@@ -34,7 +34,7 @@
           "platforms": [
             "darwin",
             "linux",
-            "windows"
+            "win32"
           ]
         },
         {
