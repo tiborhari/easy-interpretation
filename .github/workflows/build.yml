@@ -56,4 +56,4 @@ jobs:
         with:
           draft: true
           fail_on_unmatched_files: true
-          files: packages/**/.zip
+          files: packages/**/*.zip
