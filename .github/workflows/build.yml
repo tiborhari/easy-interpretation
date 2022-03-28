@@ -27,7 +27,7 @@ jobs:
         # --frozen-lockfile doesn't allow installing anything not in the lockfile
         # --network-timeout is needed to download large dependendies
         run: yarn install --frozen-lockfile --network-timeout 600000
-      - node: Run ESLint
+      - name: Run ESLint
         run: yarn lint
       - name: Check for unused imports
         run: yarn unused-exports
