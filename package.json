@@ -12,8 +12,7 @@
     "publish": "electron-forge publish",
     "lint": "eslint --cache --color --ext .jsx,.js,.tsx,.ts src",
     "unused-exports": "ts-unused-exports tsconfig.json",
-    "linux": "electron-forge make --targets @electron-forge/maker-zip",
-    "windows": "electron-forge make --targets @electron-forge/maker-squirrel",
+    "make-zip": "electron-forge make --targets @electron-forge/maker-zip",
     "precommit": "yarn lint && yarn test && yarn linux"
   },
   "keywords": [],
@@ -34,7 +33,8 @@
           "name": "@electron-forge/maker-zip",
           "platforms": [
             "darwin",
-            "linux"
+            "linux",
+            "windows"
           ]
         },
         {
