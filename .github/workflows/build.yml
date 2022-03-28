@@ -26,7 +26,7 @@ jobs:
         run: yarn install --frozen-lockfile
       - run: yarn lint
       - run: yarn unused-exports
-      - run: yarn build-zip
+      - run: yarn make-zip
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v3
         with:
