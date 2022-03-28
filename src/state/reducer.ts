@@ -6,7 +6,7 @@ import { v4 as uuidV4 } from 'uuid';
 import { generateSecretKey } from '../utils';
 import {
   Action, ADD_INTERPRETER, ADD_LISTENER, CHANGE_SETTINGS, REMOVE_INTERPRETER, REMOVE_LISTENER,
-  RESET_SETTINGS, SERVER_STATE_CHANGED,
+  RESET_SETTINGS, STATE_CHANGED,
 } from './actions';
 import { State } from './types';
 
@@ -22,9 +22,11 @@ const initialLanguageLiveState = {
 
 export const initialState: State = {
   liveState: {
+    domain: null,
     languages: {
       [initialLanguageId]: initialLanguageLiveState,
     },
+    localIpAddress: null,
     server: {
       http: {
         status: 'stopped',
@@ -75,15 +77,16 @@ export const reconcileState = (state: State): State => ({
           ...state.liveState.languages[language.id],
         },
       }), {}),
-    server: _.mapValues(state.liveState.server, (server, protocol) => {
-      if (
-        server.status === 'error'
-        && !state.settings.server[protocol as keyof typeof state.liveState.server].enable
-      ) {
-        return <const>{ status: 'stopped' };
-      }
-      return server;
-    }),
+    server: {
+      ...state.liveState.server,
+      ...(<const>['http', 'https']).reduce((all, protocol) => {
+        const server = state.liveState.server[protocol];
+        if (server.status === 'error' && !state.settings.server[protocol].enable) {
+          return { ...all, [protocol]: <const>{ status: 'stopped' } };
+        }
+        return { ...all, [protocol]: server };
+      }, {}),
+    },
   },
 });
 
@@ -173,16 +176,10 @@ const reducer = (oldState: State = initialState, action: Action): State => {
           ),
         },
       });
-    case SERVER_STATE_CHANGED:
+    case STATE_CHANGED:
       return reconcileState({
         ...state,
-        liveState: {
-          ...state.liveState,
-          server: {
-            ...state.liveState.server,
-            [action.protocol]: action.state,
-          },
-        },
+        liveState: _.merge({}, state.liveState, action.state),
       });
     case CHANGE_SETTINGS:
       return reconcileState({

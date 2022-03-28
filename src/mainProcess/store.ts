@@ -1,7 +1,11 @@
 import { ipcMain } from 'electron';
 import log from 'electron-log';
+import internalIp from 'internal-ip';
 import { Middleware } from 'redux';
 
+import { stateChanged } from '../state/actions';
+import { getSubjectName } from '../state/certInfo';
+import partialSubscribe from '../state/partialSubscribe';
 import { loadStore, persistState } from '../state/persist';
 import createStore from '../state/store';
 import { send } from './mainWindow';
@@ -22,6 +26,25 @@ const store = createStore({
 });
 persistState(store.getState());
 store.subscribe(() => persistState(store.getState()));
+
+
+const updateIpAddressNow = async () => {
+  const ipAddress = await internalIp.v4();
+  const state = store.getState();
+  if (ipAddress && ipAddress !== state.liveState.localIpAddress) {
+    store.dispatch(stateChanged({ localIpAddress: ipAddress }));
+  }
+};
+updateIpAddressNow();
+setInterval(updateIpAddressNow, 10000);
+
+
+partialSubscribe(
+  store,
+  state => state.settings.server.https.certPath,
+  certPath => getSubjectName(certPath).then(domain => store.dispatch(stateChanged({ domain }))),
+);
+
 
 ipcMain.on('action', (event, version, action) => {
   store.dispatch(action);

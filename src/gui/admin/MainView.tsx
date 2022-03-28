@@ -5,6 +5,7 @@ import {
 import { connect, ConnectedProps } from 'react-redux';
 
 import { State } from '../../state/types';
+import HowToUse from './HowToUse';
 import Settings from './Settings';
 import StatusView from './StatusView';
 
@@ -14,6 +15,7 @@ const connector = connect((state: State) => ({ hasSettings: !!state.settings }))
 
 const pages: { [pageName: string]: { title: string; Component: React.ComponentType } } = {
   state: { title: 'Status', Component: StatusView },
+  howToUse: { title: 'How to use', Component: HowToUse },
   settings: { title: 'Settings', Component: Settings },
 };
 

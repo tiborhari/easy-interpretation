@@ -28,7 +28,9 @@ export interface ServerState {
   https: HttpState;
 }
 
-interface LiveState {
+export interface LiveState {
+  domain: string | null;
+  localIpAddress: string | null;
   languages: { [languageId: string]: LanguageLiveState };
   server: ServerState;
 }
@@ -49,7 +51,7 @@ interface HttpsSettings extends HttpSettings {
   certPath: string;
   keyPath: string;
 }
-interface ServerSettings {
+export interface ServerSettings {
   enable: boolean;
   http: HttpSettings;
   https: HttpsSettings;

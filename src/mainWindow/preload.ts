@@ -1,4 +1,4 @@
-import { contextBridge, ipcRenderer } from 'electron';
+import { contextBridge, ipcRenderer, shell } from 'electron';
 import log from 'electron-log';
 
 
@@ -10,6 +10,7 @@ const api = <const>{
     warn: log.warn,
   },
   onNewState: (callback: Parameters<typeof ipcRenderer.on>[1]) => ipcRenderer.on('newState', callback),
+  openLinkInBrowser: (url: string) => shell.openExternal(url),
   sendAction: (version: unknown, action: unknown) => ipcRenderer.sendSync('action', version, action),
 };
 

@@ -1,4 +1,7 @@
-import { HttpState, Protocol, Settings } from './types';
+import { RecursivePartial } from '../gui/admin/utils';
+import {
+  HttpState, LiveState, Protocol, Settings,
+} from './types';
 
 export const ADD_LISTENER = 'ADD_LISTENER';
 export const addListener = ({
@@ -37,14 +40,16 @@ export const removeInterpreter = ({
 });
 
 
-export const SERVER_STATE_CHANGED = 'SERVER_STATE_CHANGED';
+export const STATE_CHANGED = 'STATE_CHANGED';
+export const stateChanged = (state: RecursivePartial<LiveState>) => (<const>{
+  type: STATE_CHANGED, state,
+});
+
 export const serverStateChanged = ({
   protocol, state,
 }: {
-  protocol: Protocol; state: HttpState;
-}) => (<const>{
-  type: SERVER_STATE_CHANGED, protocol, state,
-});
+  protocol: Protocol; state: RecursivePartial<HttpState>;
+}) => stateChanged({ server: { [protocol]: state } });
 
 export const CHANGE_SETTINGS = 'CHANGE_SETTINGS';
 export const changeSettings = ({
@@ -64,6 +69,6 @@ ReturnType<typeof addListener>
 | ReturnType<typeof removeListener>
 | ReturnType<typeof addInterpreter>
 | ReturnType<typeof removeInterpreter>
-| ReturnType<typeof serverStateChanged>
+| ReturnType<typeof stateChanged>
 | ReturnType<typeof changeSettings>
 | ReturnType<typeof resetSettings>;
