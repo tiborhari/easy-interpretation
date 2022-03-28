@@ -239,7 +239,7 @@ const StatusView = ({ onChangeSettings, state }: ConnectedProps<typeof connector
                 >
                   <Button
                     size="sm"
-                    variant={language.public ? 'outline-primary' : 'primary'}
+                    variant={language.public ? 'outline-secondary' : 'secondary'}
                     onClick={() => changeLanguage({ public: false })}
                   >
                     Private
