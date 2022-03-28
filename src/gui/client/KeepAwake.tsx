@@ -5,12 +5,12 @@ const KeepAwake = ({ active }: { active: boolean }) => {
   const wakeLockRef = React.useRef<WakeLockSentinel>();
 
   const requestWakeLock = () => {
-    console.info('Requesting Wake Lock');
+    console.debug('Requesting Wake Lock');
     navigator.wakeLock.request('screen').then((wakeLock) => {
-      console.info('Wake Lock received');
+      console.debug('Wake Lock received');
       wakeLockRef.current = wakeLock;
       wakeLockRef.current.addEventListener('release', () => {
-        console.info('Wake Lock released');
+        console.debug('Wake Lock released');
       });
     }).catch((error) => {
       console.error('Cannot get Wake Lock', error);
