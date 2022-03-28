@@ -9,4 +9,11 @@
   margin: 0;
   padding: 0;
   vertical-align: baseline;
+
+  &.qrcode-link {
+    color: $body-color;
+    font-size: 1.2rem;
+    line-height: 1;
+    margin-left: 0.5rem;
+  }
 }

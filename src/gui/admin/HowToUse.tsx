@@ -1,8 +1,11 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
+import * as Icon from 'react-bootstrap-icons';
 import { connect, ConnectedProps } from 'react-redux';
 
 import { Protocol, ServerSettings, State } from '../../state/types';
+import ConditionalTooltip from '../ConditionalTooltip';
+import QRModal from './QRModal';
 
 
 const connector = connect((state: State) => ({
@@ -46,15 +49,30 @@ const ConditionalEnableHint = ({ protocol, serverSettings }: {
 );
 
 const ClientLink = ({
-  domain, port, protocol, serverSettings,
-}: Parameters<typeof createUrl>[0] & { serverSettings: ServerSettings }) => {
+  addQRCode, domain, port, protocol, serverSettings,
+}: Parameters<typeof createUrl>[0] & { addQRCode?: boolean; serverSettings: ServerSettings }) => {
+  const [showModal, setShowModal] = React.useState(false);
   const url = createUrl({ domain, port, protocol });
+
   return (
     <>
+      {addQRCode ? (
+        <QRModal data={url} show={showModal} onHide={() => setShowModal(false)} />
+      ) : null}
       <LinkToBrowser url={url}>{url}</LinkToBrowser>
       <ConditionalEnableHint protocol={protocol} serverSettings={serverSettings} />
+      {addQRCode ? (
+        <ConditionalTooltip show tooltip="Show QR code">
+          <Button className="btn-inline-link qrcode-link" size="sm" variant="link" onClick={() => setShowModal(true)}>
+            <Icon.QrCode />
+          </Button>
+        </ConditionalTooltip>
+      ) : null}
     </>
   );
+};
+ClientLink.defaultProps = {
+  addQRCode: false,
 };
 
 const HowToUse = ({ domain, ipAddress, serverSettings }: ConnectedProps<typeof connector>) => {
@@ -67,15 +85,15 @@ const HowToUse = ({ domain, ipAddress, serverSettings }: ConnectedProps<typeof c
           <li>
             Open one of the following links in a smartphone browser:
             <br />
-            <ClientLink domain={ipAddress} port={serverSettings.http.port} protocol="http" serverSettings={serverSettings} />
+            <ClientLink addQRCode domain={ipAddress} port={serverSettings.http.port} protocol="http" serverSettings={serverSettings} />
             <br />
-            <ClientLink domain={domain} port={serverSettings.https.port} protocol="https" serverSettings={serverSettings} />
+            <ClientLink addQRCode domain={domain} port={serverSettings.https.port} protocol="https" serverSettings={serverSettings} />
           </li>
         ) : (
           <li>
             Open the following link in a smartphone browser:
             <br />
-            <ClientLink domain={ipAddress} port={serverSettings.http.port} protocol="http" serverSettings={serverSettings} />
+            <ClientLink addQRCode domain={ipAddress} port={serverSettings.http.port} protocol="http" serverSettings={serverSettings} />
           </li>
         )}
         <li>Click on the language, that you would like to listen.</li>
@@ -95,7 +113,7 @@ const HowToUse = ({ domain, ipAddress, serverSettings }: ConnectedProps<typeof c
             <br />
             Or open the following link in a smartphone browser:
             <br />
-            <ClientLink domain={domain} port={serverSettings.https.port} protocol="https" serverSettings={serverSettings} />
+            <ClientLink addQRCode domain={domain} port={serverSettings.https.port} protocol="https" serverSettings={serverSettings} />
           </li>
         ) : (
           <li>
@@ -107,6 +125,7 @@ const HowToUse = ({ domain, ipAddress, serverSettings }: ConnectedProps<typeof c
         <li>Click &ldquo;Log in&rdquo; on the top right corner.</li>
         <li>Log in with the password from the &ldquo;Settings&rdquo; tab.</li>
         <li>Click on the language, that you would like to interpret.</li>
+        <li>Enable access to the microphone, if asked.</li>
         <li>
           Optionally, if you would like to listen a different language while interpreting,
           click on the small button of that language.
