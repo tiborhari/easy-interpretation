@@ -35,7 +35,7 @@ const createUrl = ({ domain, port, protocol }: {
   protocol: Protocol;
 }) => (
   ((protocol === 'http' && port === 80) || (protocol === 'https' && port === 443))
-    ? domain
+    ? `${protocol}://${domain}`
     : `${protocol}://${domain}:${port}`
 );
 
