@@ -171,6 +171,10 @@ const ListenerView = ({ serverState, small }: { serverState: ServerState; small?
 
   React.useEffect(() => close, []); // Close the connection when unmounting
 
+  if (serverState && serverState.languages.length === 0) {
+    return <h5>No languages available</h5>;
+  }
+
   return (
     <div className={small ? 'd-flex flex-row' : 'd-grid gap-3'}>
       <KeepAwake active={!!interpretLanguage} />
