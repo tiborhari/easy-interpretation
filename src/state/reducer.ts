@@ -51,11 +51,11 @@ export const initialState: State = {
       enable: true,
       http: {
         enable: true,
-        port: 8080,
+        port: process.platform === 'win32' ? 80 : 8080,
       },
       https: {
         enable: false,
-        port: 8443,
+        port: process.platform === 'win32' ? 443 : 8443,
         certPath: '',
         keyPath: '',
       },
