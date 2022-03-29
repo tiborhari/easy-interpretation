@@ -160,7 +160,7 @@ const InterpreterView = ({ onClose, serverState }: {
   React.useEffect(() => closeWs, []); // Close the connection when unmounting
 
   return (
-    <div className="d-grid gap-3">
+    <div className="d-flex flex-column gap-3">
       <KeepAwake active={!!interpretLanguage} />
       <h1>Interpret</h1>
       {(serverState?.languages ?? []).map((language) => {

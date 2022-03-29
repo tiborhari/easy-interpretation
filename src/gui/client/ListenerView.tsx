@@ -176,7 +176,7 @@ const ListenerView = ({ serverState, small }: { serverState: ServerState; small?
   }
 
   return (
-    <div className={small ? 'd-flex flex-row' : 'd-grid gap-3'}>
+    <div className={small ? 'd-flex flex-row flex-wrap gap-2' : 'd-flex flex-column gap-3'}>
       <KeepAwake active={!!interpretLanguage} />
       <audio ref={audioRef} onPlay={() => setInterpreterState('live')} />
       {(serverState?.languages ?? []).map((language) => {
@@ -201,7 +201,7 @@ const ListenerView = ({ serverState, small }: { serverState: ServerState; small?
         return (
           <Button
             key={language.id}
-            className={`d-flex align-items-center ${small ? 'me-2' : ''} ${isWaitingForUser ? 'smaller-font' : ''}`}
+            className={`d-flex align-items-center ${isWaitingForUser ? 'smaller-font' : ''}`}
             variant={isActive ? colorFromStatus(interpreterState) : 'primary'}
             size={small ? undefined : 'lg'}
             onClick={() => {
