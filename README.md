@@ -57,7 +57,7 @@ For this you'll need a router, that allows defining custom DNS entries for your 
 For example [here's a guide for OpenWRT routers](https://openwrt.org/docs/guide-user/base-system/dhcp_configuration?s[]=hostnames#hostnames).
 You'll need to configure the router, so that the domain of your HTTPS certificate will point to the IP address of your computer that runs Easy interpreter.
 
-### Configure Easy interpreter
+### 4. Configure Easy interpreter
 
 Download the HTTPS certificate and key to your computer, and set their paths in Easy interpreter's "Settings" tab.
 After this, you're ready to enable HTTPS on the "Status" tab, and connect through HTTPS with a URL shown on the "How to use" tab of the software.
