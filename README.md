@@ -13,11 +13,11 @@ Main features.
 
 ## Installation
 
-Easy interpretation doesn't need installation.
+**Easy interpretation** doesn't need installation.
 You just need to download a ZIP file, and run the executable file inside.
 
-You can download the ZIP files for you operating system from the
-["Releases"](https://github.com/tiborhari/easy-interpretation/releases) section, under "Assets".
+You can download the ZIP file for you operating system from the
+[Releases](https://github.com/tiborhari/easy-interpretation/releases).
 
 
 ## Requirements
@@ -39,7 +39,8 @@ Usage instructions are included on the GUI of the downloaded software.
 
 ## Set up HTTPS
 
-You'll need to set up HTTPS, if you would like to interpret from smartphones.
+By default, you can only interpret from the computer, that is running **Easy interpretation**.
+If you would like to interpret from a smartphone, you'll need to set up HTTPS.
 These are the main steps of setting up HTTPS:
 
 ### 1. Obtain a domain name

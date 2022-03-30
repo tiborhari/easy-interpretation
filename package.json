@@ -1,7 +1,7 @@
 {
   "name": "easy-interpretation",
   "productName": "easy-interpretation",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0",
   "description": "Live event interpretation using smartphones",
   "main": ".webpack/main",
   "scripts": {
