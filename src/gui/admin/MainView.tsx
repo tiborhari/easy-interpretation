@@ -22,6 +22,10 @@ const pages: { [pageName: string]: { title: string; Component: React.ComponentTy
 const MainView = ({ hasSettings }: ConnectedProps<typeof connector>) => {
   const [page, setPage] = React.useState('state');
 
+  React.useEffect(() => {
+    document.title = 'Easy interpretation';
+  }, []);
+
   if (!hasSettings) {
     return null;
   }

@@ -6,6 +6,6 @@ export const WINDOW_OPTIONS = <const>{
     nodeIntegration: true,
     webSecurity: false,
   },
-  height: 720,
+  height: 740,
   width: 520,
 };

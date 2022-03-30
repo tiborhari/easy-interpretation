@@ -249,7 +249,7 @@ const StatusView = ({ onChangeSettings, state }: ConnectedProps<typeof connector
               {status ? (
                 <>
                   <div className="mb-2">
-                    {'Interpreter '}
+                    {'Interpreter: '}
                     <Badge bg={status.interpreterSocketId ? 'success' : 'secondary'}>
                       {status.interpreterSocketId ? 'connected' : 'not connected'}
                     </Badge>
