@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, Menu } from 'electron';
 import log from 'electron-log';
 
 import { WINDOW_OPTIONS } from '../common';
@@ -6,6 +6,8 @@ import { isDev } from '../utils';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
+
+const isMac = process.platform === 'darwin';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -59,5 +61,39 @@ export default () => new Promise<void>((resolve) => {
     }
   });
 
-  mainWindow.webContents.on('did-finish-load', resolve);
+  mainWindow.webContents.on('did-finish-load', () => {
+    const menu = Menu.buildFromTemplate([
+      {
+        label: 'File',
+        submenu: [
+          isMac ? { role: 'close' } : { role: 'quit' },
+        ],
+      },
+      {
+        label: 'Edit',
+        submenu: [
+          { role: 'undo' },
+          { role: 'redo' },
+          { type: 'separator' },
+          { role: 'cut' },
+          { role: 'copy' },
+          { role: 'paste' },
+        ],
+      },
+      {
+        label: 'View',
+        submenu: [
+          { role: 'toggleDevTools' },
+          { type: 'separator' },
+          { role: 'resetZoom' },
+          { role: 'zoomIn' },
+          { role: 'zoomOut' },
+          { type: 'separator' },
+          { role: 'togglefullscreen' },
+        ],
+      },
+    ]);
+    Menu.setApplicationMenu(menu);
+    resolve();
+  });
 });
