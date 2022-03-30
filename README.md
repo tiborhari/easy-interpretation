@@ -2,6 +2,8 @@
 
 Live event interpretation using smartphones.
 
+**Easy interpretation** is a desktop software, that allows you to listen to simultaneous interpretation with a smartphone through a local Wi-Fi network.
+
 Main features.
 
 * Supports an unlimited number of languages simultaneously.
