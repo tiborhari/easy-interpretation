@@ -36,7 +36,7 @@ const QRModal = ({
         <h5>{data}</h5>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={onHide}>Close</Button>
+        <Button variant="outline-secondary" onClick={onHide}>Close</Button>
         <Button variant="primary" onClick={handleSave}>Save to file</Button>
       </Modal.Footer>
     </Modal>
