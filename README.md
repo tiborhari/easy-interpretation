@@ -11,7 +11,7 @@ Main features.
 
 ## Installation
 
-Easy interpreted doesn't need installation.
+Easy interpretation doesn't need installation.
 You just need to download a ZIP file, and run the executable file inside.
 
 You can download the ZIP files for you operating system from the
