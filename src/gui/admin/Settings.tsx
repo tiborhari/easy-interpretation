@@ -107,7 +107,6 @@ const Settings = ({ onSave, settings }: ConnectedProps<typeof connector>) => {
         <Form.Group className="mb-3">
           <Form.Label>HTTPS certificate path</Form.Label>
           <Form.Control
-            required
             value={newSettings.server.https.certPath}
             onChange={({ target }) => (
               change({ server: { https: { certPath: target.value } } })
@@ -117,7 +116,6 @@ const Settings = ({ onSave, settings }: ConnectedProps<typeof connector>) => {
         <Form.Group className="mb-3">
           <Form.Label>HTTPS private key path</Form.Label>
           <Form.Control
-            required
             value={newSettings.server.https.keyPath}
             onChange={({ target }) => (
               change({ server: { https: { keyPath: target.value } } })

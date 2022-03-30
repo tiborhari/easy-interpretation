@@ -6,7 +6,7 @@ const EnableButton = ({
   className, disabled, value, onChange,
 }: {
   className?: string;
-  disabled?: false;
+  disabled?: boolean;
   value: boolean;
   onChange: (newValue: boolean) => void;
 }) => (
@@ -20,7 +20,6 @@ const EnableButton = ({
       Enable
     </Button>
     <Button
-      disabled={disabled}
       size="sm"
       variant={value ? 'outline-danger' : 'danger'}
       onClick={() => onChange(false)}

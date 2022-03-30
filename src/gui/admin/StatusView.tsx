@@ -134,6 +134,7 @@ const StatusView = ({ onChangeSettings, state }: ConnectedProps<typeof connector
         {(['http', 'https'] as (keyof ServerState)[]).map((protocol) => {
           const serverState = state.liveState.server[protocol];
           const serverSettings = state.settings.server[protocol];
+          const httpsDisabled = protocol === 'https' && (!state.settings.server.https.certPath || !state.settings.server.https.keyPath);
           return (
             <Col xs={6}>
               <Card>
@@ -148,15 +149,23 @@ const StatusView = ({ onChangeSettings, state }: ConnectedProps<typeof connector
                       </Badge>
                     </ConditionalTooltip>
                   </div>
-                  <EnableButton
-                    value={serverSettings.enable}
-                    onChange={enable => partialChangeSettings({
-                      server: {
-                        ...state.settings.server,
-                        [protocol]: { ...state.settings.server[protocol], enable },
-                      },
-                    })}
-                  />
+                  <ConditionalTooltip
+                    show={httpsDisabled}
+                    tooltip="HTTPS can only be enabled, if the certificate and private key is set on the Settings tab."
+                  >
+                    <div>
+                      <EnableButton
+                        disabled={httpsDisabled}
+                        value={serverSettings.enable}
+                        onChange={enable => partialChangeSettings({
+                          server: {
+                            ...state.settings.server,
+                            [protocol]: { ...state.settings.server[protocol], enable },
+                          },
+                        })}
+                      />
+                    </div>
+                  </ConditionalTooltip>
                 </Card.Body>
               </Card>
             </Col>
